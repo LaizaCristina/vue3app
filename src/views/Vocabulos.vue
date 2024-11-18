@@ -108,17 +108,20 @@
   
   // Função para consultar vocábulos
   const consultarVocabulo = async () => {
-    try {
-      const response = await axios.get(`/vocabulo/${consulta.value.termo}/${consulta.value.versao}`)
-      if (response.data.length === 0) {
-        vocabulos.value = [{ mensagem: 'Nenhum vocábulo encontrado para os critérios fornecidos' }]
-      } else {
-        vocabulos.value = response.data
-      }
-    } catch (error) {
-      console.error('Erro ao consultar vocábulo:', error)
+  try {
+    const response = await axios.get(`/vocabulo/${consulta.value.termo}/${consulta.value.versao}`)
+    if (response.data.length === 0) {
+      alert('Nenhum vocábulo encontrado para os critérios fornecidos.')
+      vocabulos.value = [] // Limpar a tabela se nada for encontrado
+    } else {
+      vocabulos.value = response.data
     }
+  } catch (error) {
+    console.error('Erro ao consultar vocábulo:', error)
+    alert('Ocorreu um erro ao realizar a consulta. Tente novamente.')
   }
+}
+
   
   // Função para carregar todos os vocábulos ao montar o componente
   const carregarVocabulos = async () => {
